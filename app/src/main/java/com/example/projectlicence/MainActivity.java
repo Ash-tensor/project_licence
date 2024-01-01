@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,12 @@ public class MainActivity extends AppCompatActivity  {
         bottomNavigationView.setOnItemSelectedListener(navListener);
 
     }
+    public class Adventurer {
+
+
+
+
+    }
 
     private NavigationBarView.OnItemSelectedListener navListener = new NavigationBarView.OnItemSelectedListener() {
         @Override
@@ -38,7 +47,7 @@ public class MainActivity extends AppCompatActivity  {
                     selectedFragment = new fragment1();
                     break;
                 case R.id.menu_2:
-                    selectedFragment = new fragment2();
+                    selectedFragment = new getUserDataFragment();
                     break;
                 case R.id.menu_3:
                     selectedFragment = new fragment3();
@@ -52,4 +61,24 @@ public class MainActivity extends AppCompatActivity  {
             return true;
         }
     } ;
+
+
+
+
+    public class DBHelper extends SQLiteOpenHelper {
+        public DBHelper(Context context) {
+            super(context, "groupDB", null, 1);
+//          "groupDB" >> 생성할 DB의 이름
+
+        }
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }
 }
