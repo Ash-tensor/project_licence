@@ -18,6 +18,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
     <string-array name="spinner_items">
+        <item>선택해주세요</item>
         <item>S - 박사</item>
         <item>A - 박사과정</item>
         <item>B - 석사</item>

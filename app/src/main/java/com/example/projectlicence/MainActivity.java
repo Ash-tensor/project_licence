@@ -1,5 +1,4 @@
 package com.example.projectlicence;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,8 +14,10 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.example.projectlicence.user;
 
 public class MainActivity extends AppCompatActivity  {
+    private com.example.projectlicence.DBHelper dbHelper;
 
     public FragmentManager fragmentManager = getSupportFragmentManager();
     BottomNavigationView bottomNavigationView;
@@ -25,15 +26,11 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        user User1 = new user(1, 1, 1, 1, 1);
 
+        dbHelper = new com.example.projectlicence.DBHelper(this);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(navListener);
-
-    }
-    public class Adventurer {
-
-
-
 
     }
 
@@ -57,28 +54,22 @@ public class MainActivity extends AppCompatActivity  {
             TextView testTextView = findViewById(R.id.testTextView);
             testTextView.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, selectedFragment).commit();
-
             return true;
         }
     } ;
 
-
-
-
-    public class DBHelper extends SQLiteOpenHelper {
-        public DBHelper(Context context) {
-            super(context, "groupDB", null, 1);
-//          "groupDB" >> 생성할 DB의 이름
-
-        }
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
-    }
+//    public class DBHelper extends SQLiteOpenHelper {
+//        public DBHelper(Context context) {
+//            super(context, "AdventurerDB", null, 1);
+////          "AdventurerDB" >> 생성할 DB의 이름
+//        }
+//        @Override
+//        public void onCreate(SQLiteDatabase db) {
+//            db.execSQL("CREATE TABLE Adventurer (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, level INTEGER, grade TEXT)");
+//        }
+//
+//        @Override
+//        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//        }
+//    }
 }
