@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -17,7 +18,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.example.projectlicence.user;
 
 public class MainActivity extends AppCompatActivity  {
-    private com.example.projectlicence.DBHelper dbHelper;
+
+    SharedPreferences sharedPreferences;
 
     public FragmentManager fragmentManager = getSupportFragmentManager();
     BottomNavigationView bottomNavigationView;
@@ -28,9 +30,20 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         user User1 = new user(1, 1, 1, 1, 1);
 
-        dbHelper = new com.example.projectlicence.DBHelper(this);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(navListener);
+
+        sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        boolean firstTime = sharedPreferences.getBoolean("firstTime", true);
+
+        if (!firstTime) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("firstTime", false);
+            editor.commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new getUserDataFragment()).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new fragment1()).commit();
+        }
 
     }
 
@@ -44,7 +57,7 @@ public class MainActivity extends AppCompatActivity  {
                     selectedFragment = new fragment1();
                     break;
                 case R.id.menu_2:
-                    selectedFragment = new getUserDataFragment();
+                    selectedFragment = new fragment2();
                     break;
                 case R.id.menu_3:
                     selectedFragment = new fragment3();
@@ -57,19 +70,4 @@ public class MainActivity extends AppCompatActivity  {
             return true;
         }
     } ;
-
-//    public class DBHelper extends SQLiteOpenHelper {
-//        public DBHelper(Context context) {
-//            super(context, "AdventurerDB", null, 1);
-////          "AdventurerDB" >> 생성할 DB의 이름
-//        }
-//        @Override
-//        public void onCreate(SQLiteDatabase db) {
-//            db.execSQL("CREATE TABLE Adventurer (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, level INTEGER, grade TEXT)");
-//        }
-//
-//        @Override
-//        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        }
-//    }
 }
